@@ -1,38 +1,46 @@
 #!/usr/bin/python3
 """Module for log passing."""
-import random
 import sys
-from time import sleep
-import datetime
 
 
-try:
-    total_size = 0
-    status_codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
-    line_count = 0
+status_codes = {
+    "200": 0,
+    "301": 0,
+    "400": 0,
+    "401": 0,
+    "403": 0,
+    "404": 0,
+    "405": 0,
+    "500": 0
+}
 
-    for line in sys.stdin:
-        try:
-            ip_address, _, _, _, status_code_str, file_size_str = line.split()[0:5]
-            status_code = int(status_code_str)
-            file_size = int(file_size_str)
-        except (ValueError, IndexError):
-            continue
+file_size = 0
 
-        total_size += file_size
-        status_codes[status_code] += 1
-        line_count += 1
 
-        if line_count % 10 == 0:
-            print(f"Total file size: {total_size}")
-            for code in sorted(status_codes.keys()):
-                if status_codes[code] > 0:
-                    print(f"{code}: {status_codes[code]}")
-            print()
-
-except KeyboardInterrupt:
-    print(f"\nTotal file size: {total_size}")
+def print_metric():
+    """Print of the log."""
+    print("File size: {}".format(file_size))
     for code in sorted(status_codes.keys()):
-        if status_codes[code] > 0:
+        if status_codes[code]:
             print(f"{code}: {status_codes[code]}")
-    print()
+
+
+if __name__ == "__main__":
+    count = 0
+    try:
+        for line in sys.stdin:
+            try:
+                parts = line.split()
+                file_size += int(parts[-1])
+                if parts[-2] in status_codes:
+                    status_codes[parts[-2]] += 1
+            except Exception:
+                pass
+            if count == 9:
+                print_metric()
+                count = -1
+            count += 1
+    except KeyboardInterrupt:
+        print_metric()
+        raise
+    print_metric()
