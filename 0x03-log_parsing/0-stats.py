@@ -36,7 +36,7 @@ if __name__ == "__main__":
                     status_codes[parts[-2]] += 1
             except Exception:
                 pass
-            if count == 9:
+            if count % 10 == 0:
                 print_metric()
                 count = -1
             count += 1
