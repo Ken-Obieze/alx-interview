@@ -25,6 +25,7 @@ def solve_nqueens(board, row, n, solutions):
             board[row] = -1
 
 def print_solutions(solutions):
+    """Print solution."""
     for sol in solutions:
         print(sol)
     print()
