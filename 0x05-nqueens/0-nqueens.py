@@ -13,7 +13,7 @@ def is_safe(board, row, col):
     return True
 
 def solve_nqueens(board, row, n, solutions):
-    """ All queens are successfully placed, add the solution to the list."""
+    """All queens are successfully placed, add the solution to the list."""
     if row == n:
         solutions.append([[r, c] for r, c in enumerate(board)])
         return
