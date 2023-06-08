@@ -1,8 +1,12 @@
 #!/usr/bin/node
 const request = require('request');
+const movie_id = process.argv[2];
+if (!movie_id  || isNaN(movie_id)) {
+  process.exit(1);
+}
 
 function getCharacters(movieId) {
-  const url = `https://swapi.dev/api/films/${movieId}/`;
+  const url = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
   request(url, (error, response, body) => {
     if (error) {
       console.error(error);
@@ -22,4 +26,4 @@ function getCharacters(movieId) {
   });
 }
 
-getCharacters(process.argv[2]);
+getCharacters(movie_id);
