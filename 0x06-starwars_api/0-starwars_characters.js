@@ -6,7 +6,7 @@ if (!movie_id  || isNaN(movie_id)) {
 }
 
 function getCharacters(movieId) {
-  const url = `https://swapi-api.alx-tools.com/api//films/${movieId}/`;
+  const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
   request(url, (error, response, body) => {
     if (error) {
       console.error(error);
