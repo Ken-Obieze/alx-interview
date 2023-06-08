@@ -1,29 +1,35 @@
 #!/usr/bin/node
-const request = require('request');
-const movie_id = process.argv[2];
-if (!movie_id  || isNaN(movie_id)) {
-  process.exit(1);
-}
 
-function getCharacters(movieId) {
-  const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
-  request(url, (error, response, body) => {
-    if (error) {
-      console.error(error);
-    } else {
-      const film = JSON.parse(body);
-      film.characters.forEach((characterUrl) => {
-        request(characterUrl, (error, response, body) => {
-          if (error) {
-            console.error(error);
-          } else {
-            const character = JSON.parse(body);
-            console.log(character.name);
-          }
-        });
-      });
+// A script that prints all characters of a Star Wars movie
+
+const request = require('request');
+
+const movieId = process.argv[2];
+const apiUrl = 'https://swapi-api.hbtn.io/api/';
+
+function getMovieCharacters(movieId) {
+  const movieUrl = apiUrl + 'films/' + movieId + '/';
+  
+  request.get({ url: movieUrl }, function (error, response, body) {
+    if (!error) {
+      const characters = JSON.parse(body).characters;
+      order(characters);
     }
   });
 }
 
-getCharacters(movie_id);
+function order(characters) {
+  if (characters.length > 0) {
+    const characterUrl = characters.shift();
+    
+    request.get({ url: characterUrl }, function (error, response, body) {
+      if (!error) {
+        const character = JSON.parse(body).name;
+        console.log(character);
+        order(characters);
+      }
+    });
+  }
+}
+
+getMovieCharacters(movieId);
