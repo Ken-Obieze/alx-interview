@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Nodule for defining islan_perimrter fuction."""
 
 
 def island_perimeter(grid):
