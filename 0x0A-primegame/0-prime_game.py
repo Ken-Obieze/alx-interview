@@ -11,6 +11,7 @@ def is_prime(n):
             return False
     return True
 
+
 def isWinner(x, nums):
     """Determine the winner of the prime game"""
     if not nums or x < 1:
