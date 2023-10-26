@@ -38,9 +38,9 @@ if __name__ == "__main__":
                 pass
             if count % 10 == 0:
                 print_metric()
-                count = -1
+                count = 0
             count += 1
     except KeyboardInterrupt:
         print_metric()
-        raise
+        sys.exit(0)
     print_metric()
