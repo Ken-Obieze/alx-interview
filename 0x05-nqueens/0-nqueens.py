@@ -12,6 +12,7 @@ def is_safe(board, row, col):
             return False
     return True
 
+
 def solve_nqueens(board, row, n, solutions):
     """All queens are successfully placed, add the solution to the list."""
     if row == n:
@@ -24,11 +25,13 @@ def solve_nqueens(board, row, n, solutions):
             solve_nqueens(board, row + 1, n, solutions)
             board[row] = -1
 
+
 def print_solutions(solutions):
     """Print solution."""
     for sol in solutions:
         print(sol)
     print()
+
 
 def nqueens(n):
     """Initialize the chessboard."""
